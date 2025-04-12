@@ -279,13 +279,13 @@
   
   .project {
     background: var(--secondary-bg);
-    padding: 1rem;
+    padding: 3rem;
     border-radius: 8px;
     transition: transform 0.3s;
   }
   
   .project img {
-    width: 100%;
+    width: 90%;
     border-radius: 8px;
   }
   

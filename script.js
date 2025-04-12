@@ -4,8 +4,9 @@ window.addEventListener("DOMContentLoaded", () => {
     const themeToggle = document.getElementById("themeToggle");
     const body = document.body;
     let vantaEffect;
-  
-    // === Slide Menu ===
+
+
+// === Slide Menu ===
     const menuToggle = document.getElementById("menuToggle");
     const slideMenu = document.getElementById("slideMenu");
   
@@ -119,6 +120,24 @@ window.addEventListener("DOMContentLoaded", () => {
         btn.textContent = 'Read less';
       }
     });
+  });
+  
+  
+  (function () {
+    emailjs.init("sF2n76yIGdCumrwPO");
+  })();
+  
+  document.getElementById("contact-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+  
+    emailjs.sendForm("service_urvc4tv", "template_lnyh4hp", this)
+      .then(() => {
+        alert("Message sent successfully!");
+        this.reset();
+      }, (error) => {
+        console.error("FAILED...", error);
+        alert("Failed to send message.");
+      });
   });
   
   
