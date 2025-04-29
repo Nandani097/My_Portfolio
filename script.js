@@ -68,15 +68,17 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   
     // === Vanta Background ===
+    
     function initVanta() {
       if (vantaEffect) vantaEffect.destroy();
-      const homeSection = document.getElementById("home");
-      if (!homeSection) return;
-  
+      const vantaContainer = document.getElementById("vanta-bg");
+      if (!vantaContainer) return;
+    
       vantaEffect = VANTA.NET({
-        el: homeSection,
+        el: vantaContainer,
         mouseControls: true,
         touchControls: true,
+        gyroControls: false,
         minHeight: 200.0,
         minWidth: 200.0,
         scale: 1.0,
@@ -85,7 +87,10 @@ window.addEventListener("DOMContentLoaded", () => {
         backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-bg').trim() || 0x0a0a23,
       });
     }
-  
+    
+    window.addEventListener("DOMContentLoaded", initVanta);
+    window.addEventListener("resize", initVanta);
+    
     // === Theme-based CSS variable updates ===
     function updateThemeColors(theme) {
       document.documentElement.style.setProperty(
