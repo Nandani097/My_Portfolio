@@ -82,7 +82,7 @@ window.addEventListener("DOMContentLoaded", () => {
         minHeight: 200.0,
         minWidth: 200.0,
         scale: 1.0,
-        scaleMobile: 0.5,
+        scaleMobile: 5.0,
         color: 0xa389f4,
         backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-bg').trim() || 0x0a0a23,
       });
