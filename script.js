@@ -129,7 +129,7 @@ window.addEventListener("DOMContentLoaded", () => {
   
   
   (function () {
-    emailjs.init("4ZxqvyNvQ7tMb8koj");
+    emailjs.init("L--SDatxwdAPVsGew");
   })();
   
   document.getElementById("contact-form").addEventListener("submit", function (e) {
