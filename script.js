@@ -87,24 +87,29 @@ slideMenu.querySelectorAll("a").forEach(link => {
     // === Vanta Background ===
     
     function initVanta() {
-      if (vantaEffect) vantaEffect.destroy();
-      const vantaContainer = document.getElementById("vanta-bg");
-      if (!vantaContainer) return;
+  if (vantaEffect) vantaEffect.destroy();
+  const vantaContainer = document.getElementById("vanta-bg");
+  if (!vantaContainer) return;
+
+  vantaEffect = VANTA.NET({
+    el: vantaContainer,
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 100.0,
+    minWidth: 100.0,
+    scale: 1.0,
+    scaleMobile: 1.0,
+    color: 0xa389f4, // line color
+    backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-bg').trim() || 0x0a0a23,
     
-      vantaEffect = VANTA.NET({
-        el: vantaContainer,
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.0,
-        minWidth: 200.0,
-        scale: 1.0,
-        scaleMobile: 1.0,
-        color: 0xa389f4,
-        backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-bg').trim() || 0x0a0a23,
-      });
-    }
-    
+    // Customize spacing & density
+    points: 25,        // total nodes
+    maxDistance: 25,   // max connection length
+    spacing: 25,       // distance between nodes
+  });
+}
+
     window.addEventListener("DOMContentLoaded", initVanta);
     window.addEventListener("resize", initVanta);
     
