@@ -10,12 +10,28 @@ window.addEventListener("DOMContentLoaded", () => {
     const menuToggle = document.getElementById("menuToggle");
     const slideMenu = document.getElementById("slideMenu");
   
-    if (menuToggle && slideMenu) {
-      menuToggle.addEventListener("click", () => {
-        slideMenu.classList.toggle("show-menu");
-      });
-    }
-  
+    menuToggle.addEventListener("click", (e) => {
+  e.stopPropagation(); // important
+  slideMenu.classList.toggle("show-menu");
+});
+
+// Close menu when clicking anywhere outside
+document.addEventListener("click", (e) => {
+  if (
+    slideMenu.classList.contains("show-menu") &&
+    !slideMenu.contains(e.target) &&
+    !menuToggle.contains(e.target)
+  ) {
+    slideMenu.classList.remove("show-menu");
+  }
+});
+
+// Close menu when clicking any menu link
+slideMenu.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    slideMenu.classList.remove("show-menu");
+  });
+});
     // Ensure menu toggle icon is visible on small screens
     const mediaQuery = window.matchMedia("(max-width: 768px)");
     function checkScreenSize(e) {
@@ -55,17 +71,18 @@ window.addEventListener("DOMContentLoaded", () => {
     setTheme(storedTheme);
   
     // === Typed.js ===
-    if (document.querySelector("#typed-skill")) {
-      new Typed("#typed-skill", {
-        strings: [
-          "HTML", "CSS", "JavaScript", "Node.js", "Database",
-          "Python", "DSA", "Java", "SQL"
-        ],
-        typeSpeed: 80,
-        backSpeed: 50,
-        loop: true,
-      });
-    }
+   new Typed("#typed-skill", {
+  strings: ["HTML", "CSS", "JavaScript", "React.js", "Python", "Java"],
+  typeSpeed: 90,
+  backSpeed: 50,
+  loop: true,
+  onStringTyped: () => {
+    const el = document.querySelector("#typed-skill");
+    el.classList.add("glitch");
+    setTimeout(() => el.classList.remove("glitch"), 150);
+  }
+});
+
   
     // === Vanta Background ===
     
@@ -144,5 +161,66 @@ window.addEventListener("DOMContentLoaded", () => {
         alert("Failed to send message.");
       });
   });
-  
+
+  let vantaEffect = null;
+
+function initVanta() {
+  const el = document.getElementById("vanta-bg");
+  if (!el || typeof VANTA === "undefined") return;
+
+  if (vantaEffect) {
+    vantaEffect.destroy();
+    vantaEffect = null;
+  }
+
+  const isMobile = window.innerWidth < 768;
+
+  vantaEffect = VANTA.NET({
+    el: el,
+    mouseControls: !isMobile,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.0,
+    minWidth: 200.0,
+
+    scale: isMobile ? 0.7 : 1.0,
+    scaleMobile: 0.7,
+
+    points: isMobile ? 6.0 : 10.0,
+    maxDistance: isMobile ? 18.0 : 25.0,
+    spacing: isMobile ? 18.0 : 15.0,
+
+    color: 0xa389f4,
+    backgroundColor: 0x0a0a23
+  });
+}
+
+window.addEventListener("load", initVanta);
+
+// Re-init ONLY when crossing breakpoint
+let lastWidth = window.innerWidth;
+window.addEventListener("resize", () => {
+  if (
+    (lastWidth >= 768 && window.innerWidth < 768) ||
+    (lastWidth < 768 && window.innerWidth >= 768)
+  ) {
+    initVanta();
+  }
+  lastWidth = window.innerWidth;
+});
+
+  const revealElements = document.querySelectorAll(".reveal");
+
+const revealOnScroll = () => {
+  revealElements.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < window.innerHeight - 100) {
+      el.classList.add("active");
+    }
+  });
+};
+
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
+
   
